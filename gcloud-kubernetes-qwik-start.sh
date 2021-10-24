@@ -3,7 +3,7 @@
 gcloud auth list
 #list project ID
 gcloud config list project
-#Identify the  default region and zone
+#Identify the  default region and zone and project
 gcloud config get-value compute/zone
 gcloud config get-value compute/region
 gcloud compute project-info describe --project #<project_ID>
