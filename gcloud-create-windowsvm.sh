@@ -41,17 +41,3 @@ gcloud compute instances get-serial-port-output instance-1
 
 # How to set a password for logging into the RDP in Cloud Shell?
 gcloud compute reset-windows-password instance-1 --zone us-central1-a --user admin
-
-
-
-
-
-
-
-
-
-
-
-
-
-
