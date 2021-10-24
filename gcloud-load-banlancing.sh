@@ -19,32 +19,34 @@ gcloud config set compute/region us-central1
 ### Create multiple web server instances
 # Create Instances- install Apache - configure homepage
 gcloud compute instances create www1 \
-    --image-family debian-9 \
-    --image-project debian-cloud \
-    --zone us-central1-a \
-    --tags network-lb-tag \
-    --metadata startup-script ="#! /bin/bash
-        sudo apt-get update
-        sudo apt-get install apache2 -y
-        sudo service apache2 restart
-        echo '<!doctype html><html><body><h1>www1</h1></body></html>' | tee /var/www/html/index.html"
+  --image-family debian-9 \
+  --image-project debian-cloud \
+  --zone us-central1-a \
+  --tags network-lb-tag \
+  --metadata startup-script="#! /bin/bash
+    sudo apt-get update
+    sudo apt-get install apache2 -y
+    sudo service apache2 restart
+    echo '<!doctype html><html><body><h1>www1</h1></body></html>' | tee /var/www/html/index.html"
 
 gcloud compute instances create www2 \
     --image-family debian-9 \
     --image-project debian-cloud \
     --zone us-central1-a \
     --tags network-lb-tag \
-    --metadata startup-script = "#! /bin/bash
-        sudo apt-get update
-        sudo apt-get install apache2 -y
-        sudo service apache2 restart
-        echo '<!doctype html><html><body><h1>www2</h1></body></html>' | tee /var/www/html/index.html"
+    --metadata startup-script="#! /bin/bash
+    sudo apt-get update
+    sudo apt-get install apache2 -y
+    sudo service apache2 restart
+    echo '<!doctype html><html><body><h1>www2</h1></body></html>' | tee /var/www/html/index.html"
+
+# --metadata strartup-script="" <= no space
 gcloud compute instances create www3 \
     --image-family debian-9 \
     --image-project debian-cloud \
     --zone us-central1-a \
     --tags network-lb-tag \
-    --metadata startup-script ="#! /bin/bash
+    --metadata startup-script="#! /bin/bash
         sudo apt-get update
         sudo apt-get install apache2 -y
         sudo service apache2 restart
@@ -52,7 +54,7 @@ gcloud compute instances create www3 \
 
 
 #Create a firewall rule to allow external traffic to the VM instances - gcloud compute firewall-rules
-gloud compute firewall-rules create www-firewall-network-lb \
+gcloud compute firewall-rules create www-firewall-network-lb \
     --target-tags network-lb-tag --allow tcp:80
 #Get External_IP of instances
 gcloud compute instances list
@@ -79,7 +81,7 @@ gcloud compute target-pools add-instances www-pool \
 
 #Add a forwarding rule
 gcloud compute forwarding-rules create www-rule \
-    --region us-central1
+    --region us-central1 \
     --ports 80 \
     --address network-lb-ip-1 \
     --target-pool www-pool
@@ -89,30 +91,32 @@ gcloud compute forwarding-rules create www-rule \
 # Check the External IP address of the Network Load balancer
 gcloud compute forwarding-rules describe www-rule --region us-central1
 
-while true; do curl -m1 External_IP; done
+#Test traffic to Network load balancer - Replace External_IP_Load_Balancer to real IP
+while true; do curl -m1 External_IP_Load_Balancer; done
 
 ### CREATE AN HTTP LOAD BALANCER
-# Create the load balancer template
-gcloud compute instances-templates create lb-backend-template \
-    --region = us-central1 \
-    --network = default \
-    --subnet=default \
-    --tags = allow-health-check \
-    --image-family=debian-9 \
-    --image-project=deian-cloud \
-    --metadata startup-script='#! /bin/bash
-        apt-get update
-        apt-get install apache2 -y
-        a2ensite default-ssl
-        a2enmod ssl
-        vm_hostname="$(curl -H "Metadata-Flover:Google" \
-        http:/169.254.169.254/computeMetadata/v1/instance/name)"
-        echo "Page served from: $vm_hostname" | \
-        tee /var/www/html/index.html
-        systemctl restart apache2'
+# Create the load balancer template 
+    #HTTP(S) Load Balancing is implemented on Google Front End (GFE)
+gcloud compute instance-templates create lb-backend-template \
+   --region=us-central1 \
+   --network=default \
+   --subnet=default \
+   --tags=allow-health-check \
+   --image-family=debian-9 \
+   --image-project=debian-cloud \
+   --metadata=startup-script='#! /bin/bash
+     apt-get update
+     apt-get install apache2 -y
+     a2ensite default-ssl
+     a2enmod ssl
+     vm_hostname="$(curl -H "Metadata-Flavor:Google" \
+     http://169.254.169.254/computeMetadata/v1/instance/name)"
+     echo "Page served from: $vm_hostname" | \
+     tee /var/www/html/index.html
+     systemctl restart apache2'
 #Create a managed instanc group based on the template
 gcloud compute instance-groups managed create lb-backend-group \
-    --template=lb-backend-template --size=2 --zone=us-central1-a 
+   --template=lb-backend-template --size=2 --zone=us-central1-a
 
 #Create the fw-allow-health-check firewall rule. This is an ingress rule that allows traffic from the Google Cloud health checking systems (130.211.0.0/22 and 35.191.0.0/16
 gcloud compute firewall-rules create fw-allow-health-check \
@@ -135,7 +139,7 @@ gcloud compute addresses describe lb-ipv4-1 \
 gcloud compute health-checks create http http-basic-check \
     --port 80
 
-#Create backend server
+#Create a backend service 
 gcloud compute backend-services create web-backend-service \
     --protocol=HTTP \
     --port-name=http \
