@@ -31,6 +31,12 @@ gcloud compute images list
 #gcloud compute images describe IMAGE_NAME \
 #    --project=IMAGE_PROJECT
 #####################################################
+gcloud compute instances create "my-vm-2" \
+  --machine-type "n1-standard-1" \ 
+  --image-project "windows-cloud" \ 
+  --image "windows-server-2012-r2-dc-v20191008" \ 
+  --subnet "default"
+
 
 # How to check the server instance is ready for an RDP connection?
 gcloud compute instances get-serial-port-output instance-1
