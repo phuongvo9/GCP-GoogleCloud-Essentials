@@ -73,9 +73,7 @@ DEVSHELL_PROJECT_ID=<project_id>
 docker build -t gcr.io/$DEVSHELL_PROJECT_ID/hello-dotnet:v1 .
 
 #  test the image locally which runs a Docker container as a daemon on port 8080 from new container image
-
 docker run -d -p 8080:8080 gcr.io/$DEVSHELL_PROJECT_ID/hello-dotnet:v1
-
 # Open the application with port 8080
 
 # Verify that the app is running locally in a Docker container
