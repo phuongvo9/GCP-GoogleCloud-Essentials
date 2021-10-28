@@ -83,3 +83,31 @@ docker ps
 
 # Stop the running container
 docker stop <Container_ID>
+
+
+# gcloud sete the project in Google Cloud
+gcloud config set project $DEVSHELL_PROJECT_ID
+
+# push the image to Google Container Registry
+gcloud docker -- push gcr.io/$DEVSHELL_PROJECT_ID/hello-dotnet:v1
+
+###------ Create and deploy your pod to cluster ###------
+# -- Create Deployemnt (Create POD)
+kubectl create deployment hello-dotnet \
+--image=gcr.io/$DEVSHELL_PROJECT_ID/hello-dotnet:v1
+
+kubectl get deployments
+kubectl get pods
+
+# Expose the hello-dotnet container to the internet
+kubectl expose deployment hello-dotnet --type="LoadBalancer" --port=8080
+
+kubectl get services
+
+# Go to http://<external IP address>:8080
+
+# Scale up the number of pods running on the service
+kubectl scale deployment hello-dotnet --replicas 3
+
+kubectl get pods
+kubectl get services
