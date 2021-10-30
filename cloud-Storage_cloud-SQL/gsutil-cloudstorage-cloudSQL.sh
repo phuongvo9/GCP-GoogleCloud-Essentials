@@ -11,7 +11,7 @@
 #Get Project ID
 
 #Create a Cloud Storage bucket using the gsutil
-export LOCATION=ASIA
+export LOCATION=US
 #export DEVSHELL_PROJECT_ID=qwiklabs-gcp-02-ebd00de3ea96
 
 
@@ -41,15 +41,13 @@ gsutil acl ch -u allUsers:R gs://$DEVSHELL_PROJECT_ID/my-excellent-blog.png
 #KEwO4MHqlhuDobpv
 
 #Connect to Compute VM (set password)
-#student_01_a04746056
-#CX[7o9USGY/ts;Q
-#blogdbuser
-#CX[7o9USGY/ts;Q
+
 
 #Set-ExecutionPolicy Bypass -Scope Process -Force; [System.Net.ServicePointManager]::SecurityProtocol = [System.Net.ServicePointManager]::SecurityProtocol -bor 3072; iex ((New-Object System.Net.WebClient).DownloadString('https://chocolatey.org/install.ps1'))
 #choco install -y webpi --version 5.1
 
 cd C:\inetpub\wwwroot
+
 notepad
 <?php
     phpinfo();
