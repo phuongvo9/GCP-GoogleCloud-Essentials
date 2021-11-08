@@ -96,3 +96,47 @@ cat acl-2.txt
 gcloud config list
 
 
+#  change the authenticated user to the first service account through the credentials that you downloaded to your local machine and then uploaded into Cloud Shell (credentials.json).
+
+gcloud auth activate-service-account --key-file credentials.json
+
+gcloud config list
+
+
+# To verify that the current account (test-service-account) cannot access the cat.jpg file in the first bucket 
+gsutil cp gs://$MY_BUCKET_NAME_1/cat.jpg ./cat-copy.jpg
+
+# Switch to personal account
+
+  #gcloud config set account [USERNAME]
+
+gcloud config set account student-04-f2f540f09b28@qwiklabs.net
+
+
+# Make the first Cloud Storage bucket readable by everyone, including unauthenticated users.
+
+gsutil iam ch allUsers:objectViewer gs://$MY_BUCKET_NAME_1
+
+#### Explore the Cloud Shell code editor
+
+git clone https://github.com/googlecodelabs/orchestrate-with-kubernetes.git
+
+
+#https://storage.googleapis.com/qwiklabs-gcp-00-df121be69c5a/cat.jpg
+<html><head><title>Cat</title></head>
+<body>
+<h1>Cat</h1>
+<img src="https://storage.googleapis.com/qwiklabs-gcp-00-df121be69c5a/cat.jpg">
+</body></html>
+
+
+# In your Cloud Shell window, copy the HTML file you created using the Code Editor to your virtual machine:
+
+gcloud compute scp index.html first-vm:index.nginx-debian.html --zone=us-central1-c
+
+
+# SSH login window that opens on first VM, install the nginx Web server
+sudo apt-get update
+sudo apt-get install nginx
+sudo cp index.nginx-debian.html /var/www/html
+# Completed
