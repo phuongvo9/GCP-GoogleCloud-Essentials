@@ -34,6 +34,3 @@ kubectl get service
 # http://[EXTERNAL-IP]:8080
 # Delete the cluster in Google Kubernetes Engine vid gcloud cmd
 gcloud container clusters delete my-cluster 
-
-
-# gcloud container clusters delete my-cluster #
