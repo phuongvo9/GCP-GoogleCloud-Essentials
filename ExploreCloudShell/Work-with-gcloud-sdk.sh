@@ -13,19 +13,16 @@
 # Built-in authorization for access to resources and instances
 
 
+
+
+export MY_REGION=us-central1
 export MY_BUCKET_NAME_1= qwiklabs-gcp-00-df121be69c5a
 export MY_BUCKET_NAME_2=$MY_BUCKET_NAME_1-2
-export MY_REGION=us-central1
-
-
 # Create Cloud storage bucket with the gsutil command, which is supplied by the Cloud SDK
 gsutil mb gs://$MY_BUCKET_NAME_2
-
-
-
 # CREATE INSTANCE
 gcloud compute instances list
-
+gcloud compute instances list
 gcloud compute zones list | grep $MY_REGION
 export MY_ZONE = us-central1-c
 # gcloud command line to create a virtual machine
