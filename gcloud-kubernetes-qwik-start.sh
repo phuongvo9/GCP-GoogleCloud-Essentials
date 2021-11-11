@@ -30,7 +30,9 @@ kubectl create deployment hello-server --image=gcr.io/google-samples/hello-app:1
 # Expose deployment
 kubectl expose deployment hello-server --type=Loadbalancer --port=8080
 kubectl get service
-
+#kubectl get service -f
 # http://[EXTERNAL-IP]:8080
+
 # Delete the cluster in Google Kubernetes Engine vid gcloud cmd
 gcloud container clusters delete my-cluster 
+
