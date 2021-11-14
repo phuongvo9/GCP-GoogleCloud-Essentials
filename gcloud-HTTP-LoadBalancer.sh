@@ -23,7 +23,7 @@ EOF
 
 # Create an instance template, uses the startup script:
 gcloud compute instance-templates create nginx-template \
-         --metadata-from-file startup-script=startup.sh
+--metadata-from-file startup-script=startup.sh
 
 
 
@@ -34,6 +34,11 @@ gcloud compute target-pools create nginx-pool
 
 # Create a managed instance group using the instance template:
 
+gcloud compute instance-groups managed create nginx-group \
+    --base-instance-name nginx \
+    --size 2 \
+    --template nginx-template \
+    --target-pool nginx-pool
 
 
 
