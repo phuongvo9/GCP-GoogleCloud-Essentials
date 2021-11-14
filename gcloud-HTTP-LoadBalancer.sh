@@ -39,13 +39,66 @@ gcloud compute instance-groups managed create nginx-group \
     --size 2 \
     --template nginx-template \
     --target-pool nginx-pool
-
+# COnfigure Firewall so that we can connect to the machines
+gcloud compute firewall-rules create www-firewall --allow tcp:80
 
 ######################################################
 ####### Create a Network Load Balancer
 ######################################################
-
+    #L4 Network Load Balancer that points to the webservers
 gcloud compute forwarding-rules create nginx-lb \
     --region us-central1 \
     --ports=80 \
     --target-pool nginx-pool
+
+# List all GCE - Compute engine forwarding rules
+gcloud compute forwarding-rules list
+
+
+######################################################
+####### Create a HTTP(s) Load Balancer -  an L7 HTTP(S) Load Balancer
+######################################################
+# global load balancing for HTTP(S) requests destined for our instances
+
+
+# First, create a health check. Health checks verify that the instance is responding to HTTP or HTTPS traffic
+gcloud compute http-health-checks create http-basic-check
+
+
+# Define an HTTP service and map a port name to the relevant port for the instance group.
+    # the load balancing service can forward traffic to the named port:
+gcloud compute instance-groups managed \
+    set-named-ports nginx-group \
+    --named-ports http:80
+
+
+# Create a backend service:
+gcloud compute backend-services create nginx-backend \
+      --protocol HTTP --http-health-checks http-basic-check --global
+
+# Add the instance group into the backend service:
+
+gcloud compute backend-services add-backend nginx-backend \
+    --instance-group nginx-group \
+    --instance-group-zone us-central1-a \
+    --global
+
+# Create a default URL map that directs all incoming requests to all our instances:
+
+gcloud compute url-maps create web-map \
+    --default-service nginx-backend
+# Create a target HTTP proxy to route requests to our URL map:
+gcloud compute target-http-proxies create http-lb-proxy \
+    --url-map web-map
+
+# Create a global forwarding rule to handle and route incoming requests. 
+    #A forwarding rule sends traffic to a specific target HTTP or HTTPS proxy depending on the IP address, IP protocol, and port specified.
+    #The global forwarding rule does not support multiple ports
+
+gcloud compute forwarding-rules create http-content-rule \
+    --global \
+    --target-http-proxy http-lb-proxy \
+    --ports 80
+
+# Check forwarding rules
+gcloud compute forwarding-rules list
