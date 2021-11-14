@@ -41,7 +41,11 @@ gcloud compute instance-groups managed create nginx-group \
     --target-pool nginx-pool
 
 
+######################################################
+####### Create a Network Load Balancer
+######################################################
 
-######################################################
-####### Create multiple web server instances
-######################################################
+gcloud compute forwarding-rules create nginx-lb \
+    --region us-central1 \
+    --ports=80 \
+    --target-pool nginx-pool
