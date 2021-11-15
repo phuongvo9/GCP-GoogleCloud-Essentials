@@ -23,3 +23,26 @@
 
     # How to use Cloud Trace, Profiler, and Debugger to identify software issues
 
+
+
+gcloud auth list
+
+gcloud config set compute/zone us-west1-b
+export PROJECT_ID=$(gcloud info --format='value(config.project)')
+gcloud container clusters list
+
+# Create a Monitoring workspace
+
+# Get GKE credential
+gcloud container clusters get-credentials shop-cluster --zone us-west1-b
+kubectl get nodes
+
+### Deploy application
+git clone https://github.com/GoogleCloudPlatform/training-data-analyst
+
+# Create soft link to the working dir
+ln -s ~/training-data-analyst/blogs/microservices-demo-1 ~/microservices-demo-1
+
+# Download and install skaffold:
+
+curl -Lo skaffold https://storage.googleapis.com/skaffold/releases/latest/skaffold-linux-amd64 && chmod +x skaffold && sudo mv skaffold /usr/local/bin
