@@ -66,3 +66,18 @@ curl -o /dev/null -s -w "%{http_code}\n"  http://$EXTERNAL_IP
 
 ./setup_csr.sh
 
+### Configure Latency SLI - Google console GUI
+# Service Level Indicators and Objectives table above, we will use the 99th percentile front end latency as the SLI.
+# Front End Latency - Resource Type, select the Global  - Filter field and select the opencensus_task Aggregator to 99th percentile.
+
+
+### Deploy new release
+
+### Latency SLO Violation - Find the Problem
+# Monitoring Overview > Autorefresh arrows: Alerts are coming
+#  best way to analyze latency issues is by using Trace
+
+
+
+### Deploy Change to Address Latency
+
