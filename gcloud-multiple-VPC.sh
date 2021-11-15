@@ -23,3 +23,17 @@ gcloud compute --project=qwiklabs-gcp-00-c519419159d3 firewall-rules create mana
 
 
 
+# Create the firewall rules for privatenet
+
+
+gcloud compute instances create managementnet-us-vm \
+    --project=qwiklabs-gcp-00-c519419159d3 \
+    --zone=us-central1-f --machine-type=n1-standard-1 \
+    --network-interface=network-tier=PREMIUM,subnet=managementsubnet-us \
+    --maintenance-policy=MIGRATE --service-account=341788628231-compute@developer.gserviceaccount.com \
+    --scopes=https://www.googleapis.com/auth/devstorage.read_only,https://www.googleapis.com/auth/logging.write,https://www.googleapis.com/auth/monitoring.write,https://www.googleapis.com/auth/servicecontrol,https://www.googleapis.com/auth/service.management.readonly,https://www.googleapis.com/auth/trace.append \
+    --create-disk=auto-delete=yes,boot=yes,device-name=managementnet-us-vm,image=projects/debian-cloud/global/images/debian-10-buster-v20211105,mode=rw,size=10,type=projects/qwiklabs-gcp-00-c519419159d3/zones/us-central1-f/diskTypes/pd-balanced \
+    --no-shielded-secure-boot --shielded-vtpm --shielded-integrity-monitoring --reservation-affinity=any
+
+
+    
