@@ -5,7 +5,7 @@ git clone https://github.com/GoogleCloudPlatform/python-docs-samples
 
 cd python-docs-samples/appengine/standard_python3/hello_world
 
-#
+# Run Hello World application locally
 sudo apt-get update
 sudo apt-get install virtualenv
 virtualenv -p python3 venv
