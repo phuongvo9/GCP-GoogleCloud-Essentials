@@ -11,9 +11,11 @@ cat mydeploy.yaml
 
 
 gcloud deployment-manager deployments create my-first-depl --config mydeploy.yaml
+# Change startup script, value: "apt-get update" to  value: "apt-get update; apt-get install nginx-light -y"
+nano mydeploy.yaml
 
 
-
+      value: "apt-get update; apt-get install nginx-light -y"
 dd if=/dev/urandom | gzip -9 >> /dev/null &
 
 ### Create a Monitoring workspace
