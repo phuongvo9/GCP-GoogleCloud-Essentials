@@ -13,3 +13,10 @@ virtualenv -p python3 venv
 source venv/bin/activate
 pip install  -r requirements.txt
 
+python main.py
+
+# Deploy and run Hello World on App Engine
+cd ~/python-docs-samples/appengine/standard_python3/hello_world
+gcloud app deploy
+gcloud app browse
+
