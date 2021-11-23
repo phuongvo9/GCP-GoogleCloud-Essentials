@@ -48,8 +48,7 @@ gcloud compute firewall-rules create www-firewall --allow tcp:80
     #L4 Network Load Balancer that points to the webservers
 gcloud compute forwarding-rules create nginx-lb \
     --region us-central1 \
-    --ports=80 \
-    --target-pool nginx-pool
+    --ports=80 --target-pool nginx-pool
 
 # List all GCE - Compute engine forwarding rules
 gcloud compute forwarding-rules list
