@@ -70,3 +70,13 @@ nano ~/test.html
 #  place the file into the appropriate location within the nginx container in the nginx Pod to be served statically
 
 kubectl cp ~/test.html $my_nginx_pod:/usr/share/nginx/html/test.html
+
+
+# Expose the Pod for testing
+kubectl expose pod $my_nginx_pod --port 80 --type LoadBalancer
+
+curl http://[EXTERNAL_IP]/test.html
+
+kubectl top pods
+
+
