@@ -33,3 +33,11 @@ kubectl cluster-info
 kubectl config current-context
 # print out some details for all the cluster contexts in the kubeconfig file
 kubectl config get-contexts
+
+# change the active context
+
+# use this approach to switching the active context when your kubeconfig file has the credentials and configuration for several clusters already populated
+kubectl config use-context gke_${GOOGLE_CLOUD_PROJECT}_us-central1-a_standard-cluster-1
+
+# view the resource usage across the nodes of the cluster
+kubectl top nodes
