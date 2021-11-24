@@ -104,3 +104,5 @@ kubectl port-forward new-nginx 10081:80
 
 curl http://127.0.0.1:10081/test.html
 
+# View the logs of a Pod
+kubectl logs new-nginx -f --timestamps
