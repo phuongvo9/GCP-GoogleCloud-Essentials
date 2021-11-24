@@ -58,3 +58,15 @@ kubectl get pods
 export my_pod_name=nginx-1-6664c49886-8p9kv
 echo $my_pod_name
 kubectl describe $my_pod_name
+
+
+# Push a file into a container
+
+nano ~/test.html
+<html> <header><title>This is title</title></header>
+<body> Hello world </body>
+</html>
+
+#  place the file into the appropriate location within the nginx container in the nginx Pod to be served statically
+
+kubectl cp ~/test.html $my_nginx_pod:/usr/share/nginx/html/test.html
