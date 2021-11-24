@@ -13,3 +13,7 @@ gcloud container clusters create $my_cluster --num-nodes 3 --zone $my_zone --ena
 ### Modify GKE Clusters
 # resize
 gcloud container clusters resize $my_cluster --zone $my_zone --num-nodes=4
+
+#Connect to a GKE Cluster
+    # This command creates a .kube directory in the home directory
+gcloud container clusters get-credetials $my_cluster --zone $my_zone
