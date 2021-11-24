@@ -41,3 +41,12 @@ kubectl config use-context gke_${GOOGLE_CLOUD_PROJECT}_us-central1-a_standard-cl
 
 # view the resource usage across the nodes of the cluster
 kubectl top nodes
+# view the resource usage across the pods
+kubectl top pods
+
+
+# Enable bash autocompletion for kubectl
+source <(kubectl completion bash)
+    #kubectl <tab> <tab>
+
+    
