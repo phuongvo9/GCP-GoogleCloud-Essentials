@@ -84,3 +84,16 @@ git clone https://github.com/GoogleCloudPlatform/training-data-analyst
 Create a soft link as a shortcut to the working directory.
 ln -s ~/training-data-analyst/courses/ak8s/v1.1 ~/ak8s
 
+cd ~/ak8s/GKE_Shell/
+
+kubectl apply -f ./new-nginx-pod.yaml
+
+# Use shell redirection to connect to a Pod
+
+kubectl exec -it new-nginx /bin/bash
+#  If the Pod had several containers, you could specify one by name with the -c option
+apt-get update
+apt-get install nano
+cd /usr/share/nginx/html
+nano test.html
+
