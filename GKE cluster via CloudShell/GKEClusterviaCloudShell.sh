@@ -79,4 +79,8 @@ curl http://[EXTERNAL_IP]/test.html
 
 kubectl top pods
 
+# Introspect GKE Pods
+git clone https://github.com/GoogleCloudPlatform/training-data-analyst
+Create a soft link as a shortcut to the working directory.
+ln -s ~/training-data-analyst/courses/ak8s/v1.1 ~/ak8s
 
