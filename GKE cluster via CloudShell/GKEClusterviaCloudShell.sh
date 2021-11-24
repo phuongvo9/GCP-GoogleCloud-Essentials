@@ -19,3 +19,17 @@ gcloud container clusters resize $my_cluster --zone $my_zone --num-nodes=4
 gcloud container clusters get-credetials $my_cluster --zone $my_zone
 
 cat ~/.kube/config 
+
+# Use kubectl to inspect a GKE cluster
+    #The sensitive certificate data is replaced with DATA+OMITTED.
+kubectl config view
+kubectl cluster-info
+# Kubernetes control plane is running at https://34.72.163.216
+# GLBCDefaultBackend is running at https://34.72.163.216/api/v1/namespaces/kube-system/services/default-http-backend:http/proxy
+# KubeDNS is running at https://34.72.163.216/api/v1/namespaces/kube-system/services/kube-dns:dns/proxy
+# Metrics-server is running at https://34.72.163.216/api/v1/namespaces/kube-system/services/https:metrics-server:/proxy
+
+# Print active context
+kubectl config current-context
+# print out some details for all the cluster contexts in the kubeconfig file
+kubectl config get-contexts
