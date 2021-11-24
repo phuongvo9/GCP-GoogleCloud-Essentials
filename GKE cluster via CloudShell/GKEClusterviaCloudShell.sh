@@ -97,3 +97,10 @@ apt-get install nano
 cd /usr/share/nginx/html
 nano test.html
 
+
+# set up port forwarding from Cloud Shell to the nginx Pod (from port 10081 of the Cloud Shell VM to port 80 of the nginx container):
+kubectl port-forward new-nginx 10081:80
+
+
+curl http://127.0.0.1:10081/test.html
+
