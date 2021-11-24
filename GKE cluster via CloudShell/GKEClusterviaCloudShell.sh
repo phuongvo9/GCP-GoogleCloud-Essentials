@@ -49,4 +49,12 @@ kubectl top pods
 source <(kubectl completion bash)
     #kubectl <tab> <tab>
 
-    
+
+# Deploy Pods to GKE clusters
+kubectl create deployment --image nginx nginx-1
+
+kubectl get pods
+
+export my_pod_name=nginx-1-6664c49886-8p9kv
+echo $my_pod_name
+kubectl describe $my_pod_name
